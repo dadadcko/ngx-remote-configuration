@@ -19,12 +19,11 @@ export function withResilientConfigurationLoader(
     {provide: LOADER_RETRY_CONFIG, useValue: retryConfig},
 
     // Add resilient configuration loader
-    {provide: HttpClientConfigurationLoader, useClass: HttpClientConfigurationLoader},
     {
-      provide: ConfigurationLoader,
+      provide: ResilientConfigurationLoader,
       useFactory: resilientConfigurationLoaderFactory,
       deps: [HttpClientConfigurationLoader, LOADER_RETRY_CONFIG]
-    }
+    },
   ]);
 }
 

@@ -1,6 +1,11 @@
-import {EnvironmentProviders, makeEnvironmentProviders} from "@angular/core";
+import {EnvironmentProviders, makeEnvironmentProviders, Optional} from "@angular/core";
 import {ConfigurationManager} from "./configuration-manager";
-import {ConfigurationLoader, HttpClientConfigurationLoader} from "./loader";
+import {
+  ConfigurationLoader,
+  HttpClientConfigurationLoader,
+  PeriodicConfigurationLoader,
+  ResilientConfigurationLoader
+} from "./loader";
 import {provideHttpClient} from "@angular/common/http";
 import {CONFIG_URL, DEFAULT_CONFIG_URL} from "./constants";
 import {RemoteConfigurationFeature} from "./features";
@@ -21,6 +26,7 @@ import {RemoteConfigurationFeature} from "./features";
  * @see withResilientConfigurationLoader
  * @see withCustomConfigurationUrl
  * @see withLoadOnApplicationBootstrap
+ * @see withPeriodicReloads
  * @publicApi
  */
 export function provideRemoteConfiguration(...features: RemoteConfigurationFeature[]): EnvironmentProviders {
@@ -32,7 +38,17 @@ export function provideRemoteConfiguration(...features: RemoteConfigurationFeatu
     {provide: CONFIG_URL, useValue: DEFAULT_CONFIG_URL},
 
     // Add default configuration loader
-    {provide: ConfigurationLoader, useClass: HttpClientConfigurationLoader},
+    {provide: HttpClientConfigurationLoader, useClass: HttpClientConfigurationLoader},
+    {
+      provide: ConfigurationLoader,
+      useFactory: (...loaders: ConfigurationLoader[]) =>
+        loaders.find(loader => !!loader),
+      deps: [
+        [new Optional(), PeriodicConfigurationLoader],
+        [new Optional(), ResilientConfigurationLoader],
+        HttpClientConfigurationLoader
+      ]
+    },
 
     // Add configuration manager
     {provide: ConfigurationManager, useClass: ConfigurationManager},
@@ -46,5 +62,6 @@ export function provideRemoteConfiguration(...features: RemoteConfigurationFeatu
 export {
   withResilientConfigurationLoader,
   withCustomConfigurationUrl,
-  withLoadOnApplicationBootstrap
+  withLoadOnApplicationBootstrap,
+  withPeriodicReloads
 } from "./features";

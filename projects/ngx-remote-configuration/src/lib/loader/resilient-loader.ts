@@ -4,6 +4,10 @@ import {Observable, retry} from "rxjs";
 import {IConfiguration, IRetryConfiguration} from "../types";
 import {LOADER_RETRY_CONFIG} from "../constants";
 
+/**
+ * Resilient configuration loader
+ * Decorator for configuration loader, which adds retry logic
+ */
 @Injectable()
 export class ResilientConfigurationLoader implements ConfigurationLoader {
   constructor(private readonly inner: ConfigurationLoader,
