@@ -20,6 +20,7 @@ import {RemoteConfigurationFeature} from "./features";
  * @param features - optional features to enrich configuration
  * @see withResilientConfigurationLoader
  * @see withCustomConfigurationUrl
+ * @see withLoadOnApplicationBootstrap
  * @publicApi
  */
 export function provideRemoteConfiguration(...features: RemoteConfigurationFeature[]): EnvironmentProviders {
@@ -44,5 +45,6 @@ export function provideRemoteConfiguration(...features: RemoteConfigurationFeatu
 
 export {
   withResilientConfigurationLoader,
-  withCustomConfigurationUrl
+  withCustomConfigurationUrl,
+  withLoadOnApplicationBootstrap
 } from "./features";
