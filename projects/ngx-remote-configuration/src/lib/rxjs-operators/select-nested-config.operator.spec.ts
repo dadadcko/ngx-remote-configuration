@@ -115,14 +115,14 @@ describe('SelectNestedConfigOperator', () => {
       it('with arrays', done => {
         const keys = ['testKey', '1', 'deepProperty'];
 
-        const piped = emitter.pipe(selectNestedValue<number>(keys.join('.')));
+        const piped2 = emitter.pipe(selectNestedValue<number>(keys.join('.')));
         const expected = 69;
         const config = {
           [keys[0]]: [{ [keys[2]]: 1 }, { [keys[2]]: expected }, { [keys[2]]: 3 }],
           otherKey: 'otherValue420',
         };
 
-        piped.subscribe({
+        piped2.subscribe({
           next: value => {
             expect(value).not.toBeNull();
             expect(value).not.toBeUndefined();
