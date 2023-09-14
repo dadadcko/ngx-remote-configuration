@@ -1,6 +1,6 @@
-type Clazz<T> = new (...args: unknown[]) => T;
+import { AbstractType, Type } from '@angular/core';
 
-export function mockClass<T>(obj: Clazz<T>): Clazz<T> {
+export function mockClass<T>(obj: Type<T> | AbstractType<T>): Type<T> {
   const keys = Object.getOwnPropertyNames(obj.prototype);
   const allMethods = keys.filter(key => {
     try {
@@ -29,5 +29,5 @@ export function mockClass<T>(obj: Clazz<T>): Clazz<T> {
     });
   });
 
-  return mockedClass as Clazz<T>;
+  return mockedClass as Type<T>;
 }
