@@ -1,17 +1,11 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -26,9 +20,7 @@
           "error",
           {
             "selector": "enumMember",
-            "format": [
-              "PascalCase"
-            ]
+            "format": ["PascalCase"]
           }
         ],
         "@angular-eslint/directive-selector": [
@@ -47,65 +39,27 @@
             "style": "kebab-case"
           }
         ],
-        "lines-between-class-members": [
-          "error",
-          "always"
-        ],
-        "newline-after-var": [
-          "error",
-          "always"
-        ],
-        "one-var": [
-          "error",
-          "never"
-        ],
-        "@typescript-eslint/no-useless-constructor": [
-          "error"
-        ],
-        "@typescript-eslint/prefer-readonly": [
-          "error"
-        ],
-        "@typescript-eslint/no-shadow": [
-          "error"
-        ],
-        "@typescript-eslint/no-inferrable-types": [
-          "error"
-        ],
-        "object-shorthand": [
-          "error",
-          "always"
-        ],
-        "no-case-declarations": [
-          "error"
-        ],
-        "no-empty": [
-          "error"
-        ],
-        "@typescript-eslint/no-empty-function": [
-          "error"
-        ],
+        "lines-between-class-members": ["error", "always"],
+        "newline-after-var": ["error", "always"],
+        "one-var": ["error", "never"],
+        "@typescript-eslint/no-useless-constructor": ["error"],
+        "@typescript-eslint/prefer-readonly": ["error"],
+        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/no-inferrable-types": ["error"],
+        "object-shorthand": ["error", "always"],
+        "no-case-declarations": ["error"],
+        "no-empty": ["error"],
+        "@typescript-eslint/no-empty-function": ["error"],
         "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": [
-          "error"
-        ],
-        "@typescript-eslint/ban-types": [
-          "error"
-        ],
-        "no-useless-escape": [
-          "error"
-        ],
-        "no-prototype-builtins": [
-          "error"
-        ],
-        "prefer-spread": [
-          "error"
-        ]
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "@typescript-eslint/ban-types": ["error"],
+        "no-useless-escape": ["error"],
+        "no-prototype-builtins": ["error"],
+        "prefer-spread": ["error"]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
+      "files": ["*.html"],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
         "plugin:@angular-eslint/template/accessibility"
@@ -113,15 +67,9 @@
       "rules": {}
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "excludedFiles": [
-        "*inline-template-*.component.html"
-      ],
-      "extends": [
-        "plugin:prettier/recommended"
-      ],
+      "files": ["*.html"],
+      "excludedFiles": ["*inline-template-*.component.html"],
+      "extends": ["plugin:prettier/recommended"],
       "rules": {
         "prettier/prettier": [
           "error",
