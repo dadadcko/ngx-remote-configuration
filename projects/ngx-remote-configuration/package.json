@@ -1,12 +1,33 @@
 {
   "name": "ngx-remote-configuration",
-  "version": "0.0.1",
+  "author": {
+    "name": "Daniel Slanina",
+    "email": "dano.slanina@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dadadcko/ngx-remote-configuration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dadadcko/ngx-remote-configuration/issues"
+  },
+  "homepage": "https://github.com/dadadcko/ngx-remote-configuration",
+  "version": "1.0.0",
+  "description": "Utility library for managing remote configuration in Angular applications.",
+  "sideEffects": false,
+  "keywords": [
+    "angular",
+    "config",
+    "configuration",
+    "configurations",
+    "remote"
+  ],
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": ">=15.0.0",
     "@angular/core": ">=15.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
-  },
-  "sideEffects": false
+  }
 }

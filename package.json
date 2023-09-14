@@ -1,17 +1,29 @@
 {
   "name": "ngx-remote-configuration",
-  "version": "0.0.0",
+  "author": {
+    "name": "Daniel Slanina",
+    "email": "dano.slanina@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dadadcko/ngx-remote-configuration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dadadcko/ngx-remote-configuration/issues"
+  },
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "build": "ng build ngx-remote-configuration",
     "build-prod": "ng build ngx-remote-configuration --configuration production",
+    "pack": "npm pack ./dist/ngx-remote-configuration",
     "watch": "ng build --watch --configuration development",
     "test": "ng test ngx-remote-configuration",
     "lint": "ng lint ngx-remote-configuration",
     "check-prettier": "prettier --check \"projects/ngx-remote-configuration/**/*.*\"",
     "fix-prettier": "prettier --write  \"projects/**/*.*\""
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^16.2.0",
     "@angular/common": "^16.2.0",
