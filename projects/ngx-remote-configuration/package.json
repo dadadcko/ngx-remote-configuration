@@ -12,7 +12,7 @@
     "url": "https://github.com/dadadcko/ngx-remote-configuration/issues"
   },
   "homepage": "https://github.com/dadadcko/ngx-remote-configuration",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility library for managing remote configuration in Angular applications.",
   "sideEffects": false,
   "keywords": [
