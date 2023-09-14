@@ -19,7 +19,7 @@
     "build-prod": "ng build ngx-remote-configuration --configuration production && npm run copy-files",
     "copy-files": "node scripts/post-build-copy.js",
     "pack": "npm pack ./dist/ngx-remote-configuration",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build ngx-remote-configuration --watch --configuration development",
     "test": "ng test ngx-remote-configuration --code-coverage",
     "test-ci": "ng test ngx-remote-configuration --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage",
     "lint": "ng lint ngx-remote-configuration",
