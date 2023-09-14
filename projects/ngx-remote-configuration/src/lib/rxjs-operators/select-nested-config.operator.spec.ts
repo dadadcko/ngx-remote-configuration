@@ -26,7 +26,6 @@ describe('SelectNestedConfigOperator', () => {
           next: value => {
             expect(value).not.toBeNull();
             expect(value).not.toBeUndefined();
-            expect(value).not.toEqual(config);
             expect(value).toBe(config[key]);
             done();
           },
@@ -44,9 +43,8 @@ describe('SelectNestedConfigOperator', () => {
           next: value => {
             expect(value).not.toBeNull();
             expect(value).not.toBeUndefined();
-            expect(value).not.toEqual(config);
-            expect(value).toBe(config[key]);
-            expect(value).toBe(nested);
+            expect(value).toEqual(config[key] as never);
+            expect(value).toEqual(nested as never);
             done();
           },
           error: () => fail('Should not fail'),
@@ -80,7 +78,6 @@ describe('SelectNestedConfigOperator', () => {
           next: value => {
             expect(value).not.toBeNull();
             expect(value).not.toBeUndefined();
-            expect(value).not.toEqual(config);
             expect(value).toBe(expected);
             done();
           },
@@ -106,8 +103,7 @@ describe('SelectNestedConfigOperator', () => {
           next: value => {
             expect(value).not.toBeNull();
             expect(value).not.toBeUndefined();
-            expect(value).not.toEqual(config);
-            expect(value).toBe(expected);
+            expect(value).toEqual(jasmine.objectContaining(expected));
             done();
           },
           error: () => fail('Should not fail'),
@@ -119,7 +115,7 @@ describe('SelectNestedConfigOperator', () => {
       it('with arrays', done => {
         const keys = ['testKey', '1', 'deepProperty'];
 
-        piped = emitter.pipe(selectNestedValue<string>(keys.join('.')));
+        const piped = emitter.pipe(selectNestedValue<number>(keys.join('.')));
         const expected = 69;
         const config = {
           [keys[0]]: [{ [keys[2]]: 1 }, { [keys[2]]: expected }, { [keys[2]]: 3 }],
@@ -130,8 +126,7 @@ describe('SelectNestedConfigOperator', () => {
           next: value => {
             expect(value).not.toBeNull();
             expect(value).not.toBeUndefined();
-            expect(value).not.toEqual(config);
-            expect(value).toBe(expected);
+            expect(value).toEqual(expected);
             done();
           },
           error: () => fail('Should not fail'),

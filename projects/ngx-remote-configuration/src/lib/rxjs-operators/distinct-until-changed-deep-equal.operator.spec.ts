@@ -7,7 +7,7 @@ describe('distinctUntilChangedDeepEqual', () => {
   let piped: Observable<unknown>;
 
   // generic check function
-  function _check(emissions: unknown[], expectedCount: number, done: jest.DoneCallback): void {
+  function _check(emissions: unknown[], expectedCount: number, done: DoneFn): void {
     piped.pipe(toArray()).subscribe({
       next: values => {
         expect(values.length).toBe(expectedCount);

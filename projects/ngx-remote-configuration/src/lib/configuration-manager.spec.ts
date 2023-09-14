@@ -20,7 +20,7 @@ describe(ConfigurationManager.name, () => {
   it('should be created', () => {
     const loader = TestBed.inject(ConfigurationLoader);
 
-    jest.spyOn(loader, 'load').mockReturnValue(of());
+    spyOn(loader, 'load').and.returnValue(of());
     const configurationManager = TestBed.inject(ConfigurationManager);
 
     expect(configurationManager).toBeTruthy();
@@ -31,7 +31,7 @@ describe(ConfigurationManager.name, () => {
       const expected = { testKey: { testNested: 'test' } };
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(of(expected));
+      spyOn(loader, 'load').and.returnValue(of(expected));
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager.configuration$.pipe(take(1)).subscribe({
@@ -47,7 +47,7 @@ describe(ConfigurationManager.name, () => {
       const expected = new Error('error');
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(throwError(() => expected));
+      spyOn(loader, 'load').and.returnValue(throwError(() => expected));
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager.configuration$.pipe(take(1)).subscribe({
@@ -69,7 +69,7 @@ describe(ConfigurationManager.name, () => {
       ];
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(of(...emissions));
+      spyOn(loader, 'load').and.returnValue(of(...emissions));
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager.configuration$.pipe(toArray()).subscribe({
@@ -88,7 +88,7 @@ describe(ConfigurationManager.name, () => {
       const key = 'testKey';
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(of({ [key]: expected }));
+      spyOn(loader, 'load').and.returnValue(of({ [key]: expected }));
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager
@@ -107,7 +107,7 @@ describe(ConfigurationManager.name, () => {
       const key = 'nonExistingKey';
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(of({ differentKey: 'test' }));
+      spyOn(loader, 'load').and.returnValue(of({ differentKey: 'test' }));
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager
@@ -126,7 +126,7 @@ describe(ConfigurationManager.name, () => {
       const key = 'testKey.testNested';
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(of({ testKey: { differentKey: 'test' } }));
+      spyOn(loader, 'load').and.returnValue(of({ testKey: { differentKey: 'test' } }));
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager
@@ -146,7 +146,7 @@ describe(ConfigurationManager.name, () => {
       const key = 'testKey.testNested';
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(of({ testKey: { testNested: expected } }));
+      spyOn(loader, 'load').and.returnValue(of({ testKey: { testNested: expected } }));
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager
@@ -166,7 +166,7 @@ describe(ConfigurationManager.name, () => {
       const key = 'testKey.0.testNested';
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(of({ testKey: [{ testNested: expected }] }));
+      spyOn(loader, 'load').and.returnValue(of({ testKey: [{ testNested: expected }] }));
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager
@@ -186,9 +186,9 @@ describe(ConfigurationManager.name, () => {
       const key = 'testKey.0.testNested.0.testDeep';
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest
-        .spyOn(loader, 'load')
-        .mockReturnValue(of({ testKey: [{ testNested: [{ testDeep: expected }] }] }));
+      spyOn(loader, 'load').and.returnValue(
+        of({ testKey: [{ testNested: [{ testDeep: expected }] }] })
+      );
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager
@@ -208,9 +208,9 @@ describe(ConfigurationManager.name, () => {
       const key = 'testKey.0.testNested.1';
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest
-        .spyOn(loader, 'load')
-        .mockReturnValue(of({ testKey: [{ testNested: [{ testNested: 'test1' }, expected] }] }));
+      spyOn(loader, 'load').and.returnValue(
+        of({ testKey: [{ testNested: [{ testNested: 'test1' }, expected] }] })
+      );
       const configurationManager = TestBed.inject(ConfigurationManager);
 
       configurationManager
@@ -235,7 +235,7 @@ describe(ConfigurationManager.name, () => {
       ];
       const loader = TestBed.inject(ConfigurationLoader);
 
-      jest.spyOn(loader, 'load').mockReturnValue(of(...emissions));
+      spyOn(loader, 'load').and.returnValue(of(...emissions));
       const configurationManager = TestBed.inject(ConfigurationManager);
       const key = 'testKey.testNested';
 

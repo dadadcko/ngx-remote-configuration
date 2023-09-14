@@ -15,7 +15,7 @@ describe(FromConfigPipe.name, () => {
       providers: [
         {
           provide: ChangeDetectorRef,
-          useValue: { markForCheck: jest.fn(), detectChanges: jest.fn() },
+          useValue: { markForCheck: jasmine.createSpy(), detectChanges: jasmine.createSpy() },
         },
         { provide: ConfigurationManager, useClass: mockClass(ConfigurationManager) },
       ],
@@ -35,7 +35,7 @@ describe(FromConfigPipe.name, () => {
 
     beforeEach(() => {
       emitter = new EventEmitter();
-      jest.spyOn(config, 'value$').mockReturnValue(emitter.asObservable());
+      spyOn(config, 'value$').and.returnValue(emitter.asObservable());
     });
 
     it('should return null when subscribing to an observable', () => {

@@ -32,7 +32,7 @@ describe(PeriodicConfigurationLoader.name, () => {
     it('should re-emit values from inner loader', done => {
       const expected: IConfiguration[] = [{ test: 1 }, { test: 2 }, { test: 3 }];
 
-      jest.spyOn(innerLoader, 'load').mockReturnValue(of(...expected));
+      spyOn(innerLoader, 'load').and.returnValue(of(...expected));
 
       loader
         .load()
@@ -47,9 +47,7 @@ describe(PeriodicConfigurationLoader.name, () => {
     });
 
     it('should rethrow error and not start periodic refresh when first load fails', done => {
-      jest
-        .spyOn(innerLoader, 'load')
-        .mockReturnValueOnce(throwError(() => new Error('test error')));
+      spyOn(innerLoader, 'load').and.returnValue(throwError(() => new Error('test error')));
 
       loader.load().subscribe({
         next: () => fail('should not be called'),
@@ -61,14 +59,14 @@ describe(PeriodicConfigurationLoader.name, () => {
     });
 
     it('should ignore errors when periodic refresh fails (not first time)', done => {
-      jest.spyOn(innerLoader, 'load').mockReturnValueOnce(of({ test: 1 }));
-      jest
-        .spyOn(innerLoader, 'load')
-        .mockReturnValueOnce(throwError(() => new Error('test error 1')));
-      jest
-        .spyOn(innerLoader, 'load')
-        .mockReturnValueOnce(throwError(() => new Error('test error 2')));
-      jest.spyOn(innerLoader, 'load').mockReturnValueOnce(of({ test: 2 }));
+      spyOn(innerLoader, 'load').and.returnValues(
+        ...[
+          of({ test: 1 }),
+          throwError(() => new Error('test error 1')),
+          throwError(() => new Error('test error 2')),
+          of({ test: 2 }),
+        ]
+      );
 
       loader
         .load()
@@ -85,9 +83,9 @@ describe(PeriodicConfigurationLoader.name, () => {
     it('should reload every n seconds, based on config', done => {
       const expected: IConfiguration[] = [{ test: 1 }, { test: 2 }, { test: 3 }];
 
-      jest.spyOn(innerLoader, 'load').mockReturnValueOnce(of(expected[0]));
-      jest.spyOn(innerLoader, 'load').mockReturnValueOnce(of(expected[1]));
-      jest.spyOn(innerLoader, 'load').mockReturnValueOnce(of(expected[2]));
+      spyOn(innerLoader, 'load').and.returnValues(
+        ...[of(expected[0]), of(expected[1]), of(expected[2])]
+      );
 
       loader
         .load()

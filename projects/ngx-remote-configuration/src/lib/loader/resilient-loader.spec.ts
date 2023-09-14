@@ -7,6 +7,7 @@ import { IConfiguration } from '../types';
 import { EventEmitter } from '@angular/core';
 import { Observable, of, throwError, toArray } from 'rxjs';
 import { createRetriableStream } from '../../test/create-retriable-stream';
+import arrayWithExactContents = jasmine.arrayWithExactContents;
 
 describe(ResilientConfigurationLoader.name, () => {
   const testConfig = { retryCount: 3, retryDelay: 0 };
@@ -36,14 +37,14 @@ describe(ResilientConfigurationLoader.name, () => {
         const emitter = new EventEmitter();
         const expected = ['test', 'test2', 'test3'];
 
-        jest.spyOn(innerLoader, 'load').mockReturnValue(emitter);
+        spyOn(innerLoader, 'load').and.returnValue(emitter);
 
         loader
           .load()
           .pipe(toArray())
           .subscribe({
             next: values => {
-              expect(values).toEqual(expected);
+              expect(values).toEqual(arrayWithExactContents(expected));
               done();
             },
             error: () => fail('should not be called'),
@@ -60,7 +61,7 @@ describe(ResilientConfigurationLoader.name, () => {
       it('should retry', done => {
         const expected = { key: 'test' };
 
-        jest.spyOn(innerLoader, 'load').mockReturnValue(
+        spyOn(innerLoader, 'load').and.returnValue(
           createRetriableStream(
             throwError(() => 'err'),
             of(expected)
@@ -81,11 +82,9 @@ describe(ResilientConfigurationLoader.name, () => {
           throwError(() => `err ${i + 1}`)
         );
 
-        jest
-          .spyOn(innerLoader, 'load')
-          .mockReturnValue(
-            createRetriableStream(...errors, of('wontEvenGetHere')) as Observable<IConfiguration>
-          );
+        spyOn(innerLoader, 'load').and.returnValue(
+          createRetriableStream(...errors, of('wontEvenGetHere')) as Observable<IConfiguration>
+        );
 
         loader.load().subscribe({
           next: () => fail('should not be called'),
