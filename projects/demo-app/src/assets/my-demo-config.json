@@ -1,0 +1,17 @@
+{
+  "firstProp": 69,
+  "nestedObj": {
+    "secondProp": "hello"
+  },
+  "arrayProp": [
+    {
+      "child": 1
+    },
+    {
+      "child": 2
+    },
+    {
+      "child": 3
+    }
+  ]
+}

@@ -24,7 +24,8 @@
     "test-ci": "ng test ngx-remote-configuration --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage",
     "lint": "ng lint ngx-remote-configuration",
     "check-prettier": "prettier --check \"projects/ngx-remote-configuration/**/*.*\"",
-    "fix-prettier": "prettier --write  \"projects/**/*.*\""
+    "fix-prettier": "prettier --write  \"projects/**/*.*\"",
+    "start-demo": "ng serve demo-app --open"
   },
   "dependencies": {
     "@angular/animations": "^16.2.0",
