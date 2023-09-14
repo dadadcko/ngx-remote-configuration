@@ -250,5 +250,30 @@ describe(ConfigurationManager.name, () => {
           error: () => fail('should not throw error'),
         });
     });
+
+    it('should crate class instance and bind data to it, if provided ', done => {
+      class TestClass {
+        constructor(public magicNumber: number) {}
+      }
+
+      const key = 'parent.testNested';
+      const config = { parent: { testNested: { magicNumber: 69 } } };
+      const loader = TestBed.inject(ConfigurationLoader);
+
+      spyOn(loader, 'load').and.returnValue(of(config));
+      const configurationManager = TestBed.inject(ConfigurationManager);
+
+      configurationManager
+        .value$(key, TestClass)
+        .pipe(take(1))
+        .subscribe({
+          next: value => {
+            expect(value).toBeInstanceOf(TestClass);
+            expect((value as TestClass).magicNumber).toEqual(config.parent.testNested.magicNumber);
+            done();
+          },
+          error: () => fail('should not throw error'),
+        });
+    });
   });
 });

@@ -54,9 +54,9 @@ describe('distinctUntilChangedDeepEqual', () => {
 
     describe('with objects and arrays', () => {
       it('-> objects only', done => {
-        const emissions = [{ a: 6 }, { a: 6 }, { a: 9 }, { a: 6 }, { a: 6 }, { a: 6 }];
+        const emissions = [{ a: 6 }, { a: 6 }, { a: 9 }, { a: 6, b: 3 }, { a: 6 }, { a: 6 }];
 
-        _check(emissions, 3, done);
+        _check(emissions, 4, done);
       });
 
       it('-> nested objects', done => {

@@ -11,6 +11,26 @@ describe('SelectNestedConfigOperator', () => {
   });
 
   describe('should map to value from config observable', () => {
+    describe('when no key is provided', () => {
+      it('should return the whole config', done => {
+        const key = undefined as unknown as string;
+        const piped = emitter.pipe(selectNestedValue<IConfiguration>(key));
+        const expected = { testKey: 'testValue', otherKey: 'otherValue' };
+
+        piped.subscribe({
+          next: value => {
+            expect(value).not.toBeNull();
+            expect(value).not.toBeUndefined();
+            expect(value).toEqual(expected);
+            done();
+          },
+          error: () => fail('Should not fail'),
+        });
+
+        emitter.emit(expected);
+      });
+    });
+
     describe('when single-level key is used (no dots)', () => {
       const key = 'testKey';
       let piped: Observable<string | undefined>;
