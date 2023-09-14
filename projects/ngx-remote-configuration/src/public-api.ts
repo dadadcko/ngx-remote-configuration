@@ -4,3 +4,4 @@
 
 export * from "./lib/provider";
 export * from "./lib/configuration-manager";
+export * from "./lib/pipes"
