@@ -1,12 +1,15 @@
-import {makeRemoteConfigurationFeature, RemoteConfigurationFeature} from "./configuration-feature";
-import {PERIODIC_RELOAD_INTERVAL} from "../constants";
+import {
+  makeRemoteConfigurationFeature,
+  RemoteConfigurationFeature,
+} from './configuration-feature';
+import { PERIODIC_RELOAD_INTERVAL } from '../constants';
 import {
   ConfigurationLoader,
   HttpClientConfigurationLoader,
   PeriodicConfigurationLoader,
-  ResilientConfigurationLoader
-} from "../loader";
-import {Optional} from "@angular/core";
+  ResilientConfigurationLoader,
+} from '../loader';
+import { Optional } from '@angular/core';
 
 /**
  * Decorates default {@link ConfigurationLoader} with periodic reloads.
@@ -15,10 +18,10 @@ import {Optional} from "@angular/core";
  * @param refreshInterval - optional refresh interval in seconds.
  * If not provided, default refresh interval will be used (15sec).
  */
-export function withPeriodicReloads(refreshInterval: number = 15): RemoteConfigurationFeature {
+export function withPeriodicReloads(refreshInterval = 15): RemoteConfigurationFeature {
   return makeRemoteConfigurationFeature([
     // Add refresh interval
-    {provide: PERIODIC_RELOAD_INTERVAL, useValue: refreshInterval},
+    { provide: PERIODIC_RELOAD_INTERVAL, useValue: refreshInterval },
 
     // Add periodic configuration loader
     {
@@ -27,8 +30,8 @@ export function withPeriodicReloads(refreshInterval: number = 15): RemoteConfigu
       deps: [
         [new Optional(), ResilientConfigurationLoader],
         HttpClientConfigurationLoader,
-        PERIODIC_RELOAD_INTERVAL
-      ]
+        PERIODIC_RELOAD_INTERVAL,
+      ],
     },
   ]);
 }
@@ -36,6 +39,7 @@ export function withPeriodicReloads(refreshInterval: number = 15): RemoteConfigu
 function periodicConfigurationLoaderFactory(
   loader: ResilientConfigurationLoader | null,
   fallbackLoader: HttpClientConfigurationLoader,
-  refreshInterval: number): ConfigurationLoader {
+  refreshInterval: number
+): ConfigurationLoader {
   return new PeriodicConfigurationLoader(loader ?? fallbackLoader, refreshInterval);
 }

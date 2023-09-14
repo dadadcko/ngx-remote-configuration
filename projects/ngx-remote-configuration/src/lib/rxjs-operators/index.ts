@@ -1,1 +1,1 @@
-export * from "./select-nested-config.operator";
+export * from './select-nested-config.operator';

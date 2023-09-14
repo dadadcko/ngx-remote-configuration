@@ -1,6 +1,5 @@
-import {map, OperatorFunction} from "rxjs";
-import {IConfiguration} from "../types";
-
+import { map, OperatorFunction } from 'rxjs';
+import { IConfiguration } from '../types';
 
 /**
  * Select nested value from configuration object
@@ -18,13 +17,15 @@ import {IConfiguration} from "../types";
  *  ... selectNestedValue<string>('section.2.value') ...
  */
 export function selectNestedValue<T>(key: string): OperatorFunction<IConfiguration, T | undefined> {
-  const keys = !!key ? key.split('.') : [];
-  return source => source.pipe(
-    map(config => _findValue<T>(config, keys)
-    )
-  );
+  const keys = key ? key.split('.') : [];
+
+  return source => source.pipe(map(config => _findValue<T>(config, keys)));
 }
 
 function _findValue<T>(config: IConfiguration, keys: string[]): T | undefined {
-  return keys.reduce((value, key) => value?.[key], config) as T | undefined
+  return keys.reduce(_nestingReducer, config) as T | undefined;
+}
+
+function _nestingReducer(config: IConfiguration, key: string): IConfiguration {
+  return config?.[key] as IConfiguration;
 }

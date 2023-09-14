@@ -1,4 +1,4 @@
-import {Provider} from "@angular/core";
+import { Provider } from '@angular/core';
 
 /**
  * A feature for use when configuring `provideRemoteConfiguration`.
@@ -11,6 +11,6 @@ export interface RemoteConfigurationFeature {
 export function makeRemoteConfigurationFeature(providers: Provider[]): RemoteConfigurationFeature {
   return {
     kind: 'RemoteConfigurationFeature',
-    providers: providers,
+    providers,
   };
 }

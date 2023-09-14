@@ -1,1 +1,1 @@
- export * from "./from-config.pipe";
+export * from './from-config.pipe';

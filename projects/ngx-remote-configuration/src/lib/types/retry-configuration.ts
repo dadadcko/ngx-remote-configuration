@@ -7,14 +7,14 @@ export interface IRetryConfiguration {
    *
    * @default 3
    */
-  retryCount?: number,
+  retryCount?: number;
 
   /**
    * Delay between retries in milliseconds.
    *
    * @default 100
    */
-  delay?: number,
+  delay?: number;
 }
 
 /**
@@ -25,4 +25,4 @@ export interface IRetryConfiguration {
 export const DEFAULT_RETRY_CONFIGURATION: IRetryConfiguration = {
   retryCount: 3,
   delay: 100,
-}
+};

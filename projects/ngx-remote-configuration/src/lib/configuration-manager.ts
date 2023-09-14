@@ -1,9 +1,8 @@
-import {inject, Injectable, Type} from "@angular/core";
-import {ConfigurationLoader} from "./loader";
-import {IConfiguration} from "./types";
-import {distinctUntilChanged, map, Observable, shareReplay} from "rxjs";
-import {selectNestedValue} from "./rxjs-operators";
-
+import { inject, Injectable, Type } from '@angular/core';
+import { ConfigurationLoader } from './loader';
+import { IConfiguration } from './types';
+import { distinctUntilChanged, map, Observable, shareReplay } from 'rxjs';
+import { selectNestedValue } from './rxjs-operators';
 
 // TODO: implement better deep equal
 function isDeepStrictEqual<T>(p: T, c: T): boolean {
@@ -65,7 +64,7 @@ export class ConfigurationManager {
     return this.configuration$.pipe(
       selectNestedValue<T>(key),
       distinctUntilChanged(isDeepStrictEqual),
-      map(v => bindTo && !!v ? Object.assign(new bindTo()!, v) : v)
+      map(v => (bindTo && !!v ? Object.assign(new bindTo() as object, v) : v))
     );
-  };
+  }
 }

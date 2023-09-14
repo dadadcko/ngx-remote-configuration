@@ -1,9 +1,8 @@
-import {Inject, Injectable} from "@angular/core";
-import {ConfigurationLoader} from "./configuration-loader";
-import {PERIODIC_RELOAD_INTERVAL} from "../constants";
-import {IConfiguration} from "../types";
-import {catchError, exhaustMap, interval, Observable, startWith, switchMap} from "rxjs";
-
+import { Inject, Injectable } from '@angular/core';
+import { ConfigurationLoader } from './configuration-loader';
+import { PERIODIC_RELOAD_INTERVAL } from '../constants';
+import { IConfiguration } from '../types';
+import { catchError, exhaustMap, interval, Observable, startWith, switchMap } from 'rxjs';
 
 /**
  * Periodic configuration loader
@@ -11,14 +10,13 @@ import {catchError, exhaustMap, interval, Observable, startWith, switchMap} from
  */
 @Injectable()
 export class PeriodicConfigurationLoader implements ConfigurationLoader {
-  constructor(private readonly inner: ConfigurationLoader,
-              @Inject(PERIODIC_RELOAD_INTERVAL) private readonly reloadInterval: number) {
-  }
+  constructor(
+    private readonly inner: ConfigurationLoader,
+    @Inject(PERIODIC_RELOAD_INTERVAL) private readonly reloadInterval: number
+  ) {}
 
   public load(): Observable<IConfiguration> {
-    return this.inner.load().pipe(
-      switchMap(value => this.periodicReload().pipe(startWith(value)))
-    );
+    return this.inner.load().pipe(switchMap(value => this.periodicReload().pipe(startWith(value))));
   }
 
   private periodicReload(): Observable<IConfiguration> {

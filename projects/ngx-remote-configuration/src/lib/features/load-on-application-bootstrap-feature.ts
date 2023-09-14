@@ -1,7 +1,11 @@
-import {makeRemoteConfigurationFeature, RemoteConfigurationFeature} from "./configuration-feature";
-import {APP_INITIALIZER} from "@angular/core";
-import {ConfigurationManager} from "../configuration-manager";
-import {take} from "rxjs";
+import {
+  makeRemoteConfigurationFeature,
+  RemoteConfigurationFeature,
+} from './configuration-feature';
+import { APP_INITIALIZER } from '@angular/core';
+import { ConfigurationManager } from '../configuration-manager';
+import { Observable, take } from 'rxjs';
+import { IConfiguration } from '../types';
 
 /**
  * Feature which will load the remote configuration before the application starts.
@@ -20,11 +24,11 @@ export function withLoadOnApplicationBootstrap(): RemoteConfigurationFeature {
       provide: APP_INITIALIZER,
       useFactory: loadRemoteConfiguration,
       deps: [ConfigurationManager],
-      multi: true
-    }
+      multi: true,
+    },
   ]);
 }
 
 function loadRemoteConfiguration(configurationManager: ConfigurationManager) {
-  return () => configurationManager.configuration$.pipe(take(1));
+  return (): Observable<IConfiguration> => configurationManager.configuration$.pipe(take(1));
 }

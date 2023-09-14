@@ -1,6 +1,6 @@
-import {Observable} from "rxjs";
-import {IConfiguration} from "../types";
-import {Injectable} from "@angular/core";
+import { Observable } from 'rxjs';
+import { IConfiguration } from '../types';
+import { Injectable } from '@angular/core';
 
 /**
  * Configuration loader
@@ -8,7 +8,6 @@ import {Injectable} from "@angular/core";
  */
 @Injectable()
 export abstract class ConfigurationLoader {
-
   /**
    * Load configuration from remote source
    * @returns {Observable<IConfiguration>} Observable with configuration,

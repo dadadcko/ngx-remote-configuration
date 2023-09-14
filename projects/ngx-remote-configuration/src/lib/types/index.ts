@@ -1,2 +1,2 @@
-export * from "./configuration";
-export * from "./retry-configuration";
+export * from './configuration';
+export * from './retry-configuration';

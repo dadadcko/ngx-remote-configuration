@@ -1,7 +1,14 @@
-import {makeRemoteConfigurationFeature, RemoteConfigurationFeature} from "./configuration-feature";
-import {DEFAULT_RETRY_CONFIGURATION, IRetryConfiguration} from "../types";
-import {ConfigurationLoader, HttpClientConfigurationLoader, ResilientConfigurationLoader} from "../loader";
-import {LOADER_RETRY_CONFIG} from "../constants";
+import {
+  makeRemoteConfigurationFeature,
+  RemoteConfigurationFeature,
+} from './configuration-feature';
+import { DEFAULT_RETRY_CONFIGURATION, IRetryConfiguration } from '../types';
+import {
+  ConfigurationLoader,
+  HttpClientConfigurationLoader,
+  ResilientConfigurationLoader,
+} from '../loader';
+import { LOADER_RETRY_CONFIG } from '../constants';
 
 /**
  * Decorates default {@link ConfigurationLoader} with resiliency.
@@ -11,24 +18,26 @@ import {LOADER_RETRY_CONFIG} from "../constants";
  * @see DEFAULT_RETRY_CONFIGURATION
  */
 export function withResilientConfigurationLoader(
-  config?: IRetryConfiguration): RemoteConfigurationFeature {
+  config?: IRetryConfiguration
+): RemoteConfigurationFeature {
+  const retryConfig = { ...DEFAULT_RETRY_CONFIGURATION, ...(config ?? {}) };
 
-  const retryConfig = {...DEFAULT_RETRY_CONFIGURATION, ...(config ?? {})}
   return makeRemoteConfigurationFeature([
     // Add retry options
-    {provide: LOADER_RETRY_CONFIG, useValue: retryConfig},
+    { provide: LOADER_RETRY_CONFIG, useValue: retryConfig },
 
     // Add resilient configuration loader
     {
       provide: ResilientConfigurationLoader,
       useFactory: resilientConfigurationLoaderFactory,
-      deps: [HttpClientConfigurationLoader, LOADER_RETRY_CONFIG]
+      deps: [HttpClientConfigurationLoader, LOADER_RETRY_CONFIG],
     },
   ]);
 }
 
 function resilientConfigurationLoaderFactory(
   loader: HttpClientConfigurationLoader,
-  retryConfig: IRetryConfiguration): ConfigurationLoader {
+  retryConfig: IRetryConfiguration
+): ConfigurationLoader {
   return new ResilientConfigurationLoader(loader, retryConfig);
 }

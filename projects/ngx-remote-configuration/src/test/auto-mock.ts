@@ -1,25 +1,26 @@
-export function mockClass<T>(obj: new (...args: any[]) => T): any {
+type Clazz<T> = new (...args: unknown[]) => T;
+
+export function mockClass<T>(obj: Clazz<T>): Clazz<T> {
   const keys = Object.getOwnPropertyNames(obj.prototype);
-  const allMethods = keys.filter((key) => {
+  const allMethods = keys.filter(key => {
     try {
       return typeof obj.prototype[key] === 'function';
     } catch (error) {
       return false;
     }
   });
-  const allProperties = keys.filter((x) => !allMethods.includes(x));
+  const allProperties = keys.filter(x => !allMethods.includes(x));
 
-  const mockedClass = class T {
-  };
+  const mockedClass = class T {};
 
   allMethods.forEach(
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    // @ts-ignore
-    (method) => (mockedClass.prototype[method] = (): void => {
-    })
+    method =>
+      (mockedClass.prototype[method as never] = ((): void => {
+        /* do nothing, its mocked */
+      }) as never)
   );
 
-  allProperties.forEach((method) => {
+  allProperties.forEach(method => {
     Object.defineProperty(mockedClass.prototype, method, {
       get() {
         return '';
@@ -28,5 +29,5 @@ export function mockClass<T>(obj: new (...args: any[]) => T): any {
     });
   });
 
-  return mockedClass;
+  return mockedClass as Clazz<T>;
 }

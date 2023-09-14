@@ -54,7 +54,7 @@
           {
             "paths": [
               {
-                "name": "rxjs",
+                "name": "rxjs/operators",
                 "importNames": [
                   "audit",
                   "auditTime",
@@ -179,7 +179,7 @@
                   "zipAll",
                   "zipWith"
                 ],
-                "message": "Import RxJS operators from 'rxjs/operators'."
+                "message": "Import RxJS operators directly from 'rxjs' package."
               }
             ]
           }
