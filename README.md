@@ -1,27 +1,60 @@
-# NgxRemoteConfiguration
+# 🚀 Ngx Remote Configuration
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+Utility library for managing remote configuration in Angular applications.
 
-## Development server
+Configuration is loaded from remote URL and accessible via simple configuration facade.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Samples
+The best way to find out, what library can offer to you, is by exploring the examples.
+There is a [demo app](https://github.com/dadadcko/ngx-remote-configuration/tree/main/projects/demo-app) prepared, which showcases all features of this library.
 
-## Code scaffolding
+## 🔧 Instalation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To install the package, simply run following command at path, where your `package.json` is located:
+```bash
+npm install ngx-remote-configuration
+```
 
-## Build
+Then, register library providers:
+```ts
+// register the remote configuration providers
+provideRemoteConfiguration(...);
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Usage
+Public Api of the library is represented by single `ConfigurationManager` facade.
+This facade provides stream with latest configuration object from remote source.
+Sample usage of the facade:
+```ts
+// full configuration
+inject(ConfigurationManager)
+    .configuration$.subscribe(config => console.log('Full configuration:', config));
 
-## Running unit tests
+// some value/ section
+inject(ConfigurationManager)
+      .value$<string>('nestedObj.secondProp')
+      .subscribe(value => console.log('Configuration value under <nestedObj.secondProp> :', value));
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+// section bound to a class instance
+inject(ConfigurationManager)
+      .value$<NestedConfigurationSection>('nestedObj', NestedConfigurationSection)
+      .subscribe(value =>
+        console.log('Configuration value under <nestedObj>, bound to class instance :', value)
+      );
+```
 
-## Running end-to-end tests
+For detailed usage preview, check out [demo sample app](https://github.com/dadadcko/ngx-remote-configuration/tree/main/projects/demo-app).
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Add-ins
+Library provides several add-ins features, which can modify/enrich the default behaviour.
 
-## Further help
+Example of some Add-ins:
+- **Resilient configuration loading**: Adds resiliency when loading configuration from remote source.
+Enabled by calling `withResilientConfigurationLoader(retryOptions)` when registering providers.
+- **Periodic configuration reloads**: Adds periodic reloads of configuration. Consumers are notified _only_ when configuration value changes.
+Enabled by calling `withPeriodicReloads(intervalInSeconds)` when registering providers.
+- **On bootstrap load**: By default, configuration is loaded when it is requested for the first time.
+This add-in opposes this default behaviour, and loads configuration before application starts - blocking the startup until configuration is resolved.
+Enabled by calling `withLoadOnApplicationBootstrap()` when registering providers.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+For the full list of features, check [provider registration in demo sample app](https://github.com/dadadcko/ngx-remote-configuration/blob/main/projects/demo-app/src/app/app.config.ts).
