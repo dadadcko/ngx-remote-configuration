@@ -1,0 +1,46 @@
+name: Build, Lint & Test Library
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+
+jobs:
+  build_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build, Lint and Test Library
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Installing Dependencies
+        run: npm ci
+
+      - name: Linting Frontend
+        run: npm run lint --  --max-warnings 0
+
+      - name: Testing Frontend
+        run: npm run test-ci
+
+      - name: Building Frontend
+        run: npm run build-prod
+
+      - name: Copying essential additional files
+        run: npm run copy-files
+
+      - name: Upload Artefact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ngx_remote_configuration_artefact
+          path: dist/ngx-remote-configuration
