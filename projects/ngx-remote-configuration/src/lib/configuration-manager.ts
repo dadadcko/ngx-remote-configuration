@@ -1,13 +1,8 @@
 import { inject, Injectable, Type } from '@angular/core';
 import { ConfigurationLoader } from './loader';
 import { IConfiguration } from './types';
-import { distinctUntilChanged, map, Observable, shareReplay } from 'rxjs';
-import { selectNestedValue } from './rxjs-operators';
-
-// TODO: implement better deep equal
-function isDeepStrictEqual<T>(p: T, c: T): boolean {
-  return JSON.stringify(p) === JSON.stringify(c);
-}
+import { map, Observable, shareReplay } from 'rxjs';
+import { distinctUntilChangedDeepEqualOperator, selectNestedValue } from './rxjs-operators';
 
 /**
  * Configuration manager
@@ -20,7 +15,7 @@ export class ConfigurationManager {
   // actual configuration stream
   private readonly _configStream = this.loader
     .load()
-    .pipe(distinctUntilChanged(isDeepStrictEqual)) // emit only when configuration changes
+    .pipe(distinctUntilChangedDeepEqualOperator()) // emit only when configuration changes
     .pipe(shareReplay(1)); // share same configuration stream to all subscribers
 
   /**
@@ -63,7 +58,7 @@ export class ConfigurationManager {
   public value$<T>(key: string, bindTo?: Type<T>): Observable<T | undefined> {
     return this.configuration$.pipe(
       selectNestedValue<T>(key),
-      distinctUntilChanged(isDeepStrictEqual),
+      distinctUntilChangedDeepEqualOperator(),
       map(v => (bindTo && !!v ? Object.assign(new bindTo() as object, v) : v))
     );
   }
