@@ -1,5 +1,8 @@
 # 🚀 Ngx Remote Configuration
 
+![Build Status](https://github.com/dadadcko/ngx-remote-configuration/actions/workflows/ci.yml/badge.svg?branch=main)
+![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
+
 Utility library for managing remote configuration in Angular applications.
 
 Configuration is loaded from remote URL and accessible via simple configuration facade.
