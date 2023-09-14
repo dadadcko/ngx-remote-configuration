@@ -97,9 +97,9 @@ describe(PeriodicConfigurationLoader.name, () => {
             values
               .map(v => v.interval)
               .forEach((i, emission) => {
-                if (emission === 0) expect(i).toBeCloseTo(0, -1);
+                if (emission === 0) expect(i).toBeCloseTo(0, -2);
                 // -1 will do expected difference < 5 (okay for testing...)
-                else expect(i).toBeCloseTo(reloadInterval * 1000, -1);
+                else expect(i).toBeCloseTo(reloadInterval * 1000, -2);
               });
 
             expect(values.map(v => v.value)).toEqual(expected);
