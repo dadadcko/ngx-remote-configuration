@@ -1,4 +1,4 @@
-import { EnvironmentProviders, makeEnvironmentProviders, Optional } from '@angular/core';
+import { EnvironmentProviders, makeEnvironmentProviders, Optional, Self } from '@angular/core';
 import { ConfigurationManager } from './configuration-manager';
 import {
   ConfigurationLoader,
@@ -44,8 +44,8 @@ export function provideRemoteConfiguration(
       provide: ConfigurationLoader,
       useFactory: (...loaders: ConfigurationLoader[]) => loaders.find(loader => !!loader),
       deps: [
-        [new Optional(), PeriodicConfigurationLoader],
-        [new Optional(), ResilientConfigurationLoader],
+        [new Optional(), new Self(), PeriodicConfigurationLoader],
+        [new Optional(), new Self(), ResilientConfigurationLoader],
         HttpClientConfigurationLoader,
       ],
     },
